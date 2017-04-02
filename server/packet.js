@@ -11,6 +11,7 @@ var packet = {
   CS_PING: 10002,
   CS_QUESTION: 10003,
   CS_CHAT: 10004,
+  CS_FLOAT: 10005,
 
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -22,6 +23,7 @@ var packet = {
   SC_PING_SUCCESS: 20002,
   SC_QUESTION: 20003,
   SC_CHAT: 20004,
+  SC_FLOAT: 20005,
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -43,6 +45,12 @@ packet[packet.CS_CHAT] = function (remoteProxy, data) {
   var msg = data.read_string();
   if (!data.completed()) return true;
   remoteProxy.chat(msg);
+}
+
+packet[packet.CS_FLOAT] = function (remoteProxy, data) {
+  var f = data.read_float();
+  if (!data.completed()) return true;
+  remoteProxy.float(f);
 }
 
 
@@ -74,6 +82,13 @@ packet.make_ping_success = function (ping_time) {
 packet.make_chat = function (msg) {
   var o = new packet_writer(packet.SC_CHAT);
   o.append_string(msg);
+  o.finish();
+  return o.buffer;
+}
+
+packet.make_float = function(f) {
+  var o = new packet_writer(packet.SC_FLOAT);
+  o.append_float(f);
   o.finish();
   return o.buffer;
 }

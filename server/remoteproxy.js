@@ -34,6 +34,11 @@ class RemoteProxy extends server.RemoteProxy {
     console.log('RemoteProxy ping: ' + pingTime)
     this.send(packet.make_ping_success(pingTime))
   }
+
+  float(f) {
+    console.log('RemoteProxy float: ' + f)
+    this.send(packet.make_float(f))
+  }
 }
 
 module.exports = RemoteProxy

@@ -112,6 +112,11 @@ public class DGTRemote : MonoBehaviour
 		_Packet.RequestSendChat(msg);
 	}
 
+	public void RequestSendFloat(float f)
+	{
+		_Packet.RequestSendFloat(f);
+	}
+
 	public void TryPing(int pingTime)
 	{
 		_Packet.RequestPing(pingTime);

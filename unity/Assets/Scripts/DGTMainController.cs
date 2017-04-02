@@ -66,6 +66,7 @@ public class DGTMainController : MonoBehaviour
 		if(DGTRemote.Instance.Connected())
 		{
 			DGTRemote.Instance.RequestSendChat(m_inputText.text);
+			DGTRemote.Instance.RequestSendFloat(1.445f);
 		}
 	}
 }

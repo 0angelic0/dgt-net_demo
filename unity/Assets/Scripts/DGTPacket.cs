@@ -21,11 +21,13 @@ class DGTPacket : PacketManager
 		CS_PING									= 10002,
 		CS_ANSWER									= 10003,
 		CS_CHAT 								= 10004,
+		CS_FLOAT								= 10005,
 		
 		SC_LOGGED_IN							= 20001,
 		SC_PING_SUCCESS							= 20002,
 		SC_QUESTION									= 20003,
 		SC_CHAT									= 20004,
+		SC_FLOAT								= 20005,
 
 	}
 	
@@ -61,6 +63,7 @@ class DGTPacket : PacketManager
 		_Mapper [(int)PacketId.SC_PING_SUCCESS] = RecvPingSuccess;
 		_Mapper [(int)PacketId.SC_QUESTION] = RecvQuestion;
 		_Mapper [(int)PacketId.SC_CHAT] = RecvChat;
+		_Mapper [(int)PacketId.SC_FLOAT] = RecvFloat;
 	}
 #endregion
 
@@ -94,6 +97,15 @@ class DGTPacket : PacketManager
 		EndSend ();
 
 	}
+
+	public void RequestSendFloat(float f)
+	{
+		PacketWriter pw = BeginSend ((int)PacketId.CS_FLOAT);
+
+		pw.WriteFloat(f);
+
+		EndSend ();
+	}
 #endregion
 
 #region receive from server	
@@ -120,6 +132,14 @@ class DGTPacket : PacketManager
 		Debug.Log("RecvChat" + msg);
 
 		DGTRemote.Instance.recvChat(msg);
+	}
+
+	private void RecvFloat(int packet_id, PacketReader pr)
+	{
+		float f = pr.ReadFloat();
+		Debug.Log("RecvFloat" + f);
+
+		DGTRemote.Instance.recvChat("" + f);
 	}
 #endregion
 }
