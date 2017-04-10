@@ -6,6 +6,11 @@ public class DGTMainController : MonoBehaviour
 	public Text m_chat;
 	public InputField m_inputText;
 
+	void OnApplicationQuit()
+	{
+		DGTRemote.GetInstance().Disconnect();
+	}
+
 	void Update ()
 	{
 		DGTRemote.GetInstance ().ProcessEvents (); 
